@@ -1,0 +1,127 @@
+﻿<Window x:Class="экзамка.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:экзамка"
+        mc:Ignorable="d"
+         Title="Языки народов мира - Главная" Height="600" Width="700"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Информация о пользователе и кнопка выхода -->
+        <Border Grid.Row="0" Background="#f0f0f0" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="Пользователь: " FontWeight="Bold"/>
+                    <TextBlock x:Name="txtUserInfo" Text=""/>
+                    <TextBlock Text=" | Роль: " FontWeight="Bold" Margin="20,0,0,0"/>
+                    <TextBlock x:Name="txtRoleInfo" Text=""/>
+                </StackPanel>
+
+                <Button Grid.Column="1" Content="Выйти" Width="100" Height="30" 
+                        Click="BtnLogout_Click" HorizontalAlignment="Right"/>
+            </Grid>
+        </Border>
+
+        <!-- ListView с растянутыми карточками -->
+        <ListView Grid.Row="1" x:Name="lvData" Margin="0,0,0,10" 
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#ddd" BorderThickness="1" CornerRadius="5" 
+                            Margin="5" Padding="10" Background="White" HorizontalAlignment="Stretch">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Фото/Флаг страны -->
+                            <Border Grid.Column="0" BorderBrush="#eee" BorderThickness="1" 
+                                    Width="130" Height="130" Background="#f9f9f9">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="🌍" FontSize="40" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding CountryName}" FontSize="12" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Информация о стране и языке -->
+                            <StackPanel Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Stretch">
+                                <!-- Страна и континент -->
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                    <TextBlock Text="{Binding Continent}" FontWeight="Bold" FontSize="14"/>
+                                    <TextBlock Text=" | " Margin="5,0"/>
+                                    <TextBlock Text="{Binding CountryName}" FontWeight="Bold" FontSize="14"/>
+                                </StackPanel>
+
+                                <!-- Столица -->
+                                <TextBlock Text="{Binding Capital, StringFormat='Столица: {0}'}" 
+                                           TextWrapping="Wrap" Margin="0,0,0,5" Foreground="#555"/>
+
+                                <!-- Язык -->
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Язык:" Width="120" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding LanguageName}" FontWeight="Bold"/>
+                                </StackPanel>
+
+                                <!-- Языковая группа -->
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Языковая группа:" Width="120" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding LanguageGroup}"/>
+                                </StackPanel>
+
+                                <!-- Письменность -->
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Письменность:" Width="120" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding WritingSystem}"/>
+                                </StackPanel>
+
+                                <!-- Население -->
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Население:" Width="120" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding Population, StringFormat={}{0} млн чел.}" 
+                                               FontWeight="Bold" Foreground="#2E7D32"/>
+                                </StackPanel>
+
+                                <!-- Количество носителей -->
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="Носителей языка:" Width="120" Foreground="Gray"/>
+                                    <TextBlock Text="{Binding SpeakersCount, StringFormat={}{0} тыс чел.}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Статусная строка -->
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>
+                <TextBlock x:Name="txtStatus" Text="Готов"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock x:Name="txtRecordCount" Text=""/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
