@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:экзамка"
         mc:Ignorable="d"
-         Title="Языки народов мира - Главная" Height="600" Width="700"
+        Title="Языки народов мира - Главная" Height="700" Width="900"
         WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -34,10 +35,44 @@
             </Grid>
         </Border>
 
-        <!-- ListView с растянутыми карточками -->
-        <ListView Grid.Row="1" x:Name="lvData" Margin="0,0,0,10" 
+        <!-- Панель управления: поиск и кнопки -->
+        <Border Grid.Row="1" Background="#f5f5f5" Padding="10" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Поиск -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <TextBlock Text="🔍 Поиск по языку:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <TextBox x:Name="txtSearch" Width="200" Height="25" 
+                             TextChanged="TxtSearch_TextChanged" 
+                             VerticalContentAlignment="Center"
+                             Padding="5,0"/>
+                </StackPanel>
+
+                <!-- Кнопки управления -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Content="➕ Добавить" Width="100" Height="30" 
+                            Click="BtnAdd_Click" Margin="0,0,10,0"
+                            Background="#4CAF50" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="❌ Удалить" Width="100" Height="30" 
+                            Click="BtnDelete_Click" Margin="0,0,10,0"
+                            Background="#f44336" Foreground="White" FontWeight="Bold"/>
+                    <Button Content="🔄 Обновить" Width="100" Height="30" 
+                            Click="BtnRefresh_Click"
+                            Background="#2196F3" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ListView с данными -->
+        <ListView Grid.Row="2" x:Name="lvData" Margin="0,0,0,10" 
                   HorizontalContentAlignment="Stretch"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  SelectionMode="Single">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -54,7 +89,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Фото/Флаг страны -->
+                            <!-- Флаг страны -->
                             <Border Grid.Column="0" BorderBrush="#eee" BorderThickness="1" 
                                     Width="130" Height="130" Background="#f9f9f9">
                                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -64,7 +99,7 @@
                                 </StackPanel>
                             </Border>
 
-                            <!-- Информация о стране и языке -->
+                            <!-- Информация -->
                             <StackPanel Grid.Column="1" Margin="15,0,0,0" HorizontalAlignment="Stretch">
                                 <!-- Страна и континент -->
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
@@ -115,7 +150,7 @@
         </ListView>
 
         <!-- Статусная строка -->
-        <StatusBar Grid.Row="2">
+        <StatusBar Grid.Row="3">
             <StatusBarItem>
                 <TextBlock x:Name="txtStatus" Text="Готов"/>
             </StatusBarItem>
